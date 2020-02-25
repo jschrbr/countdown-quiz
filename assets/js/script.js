@@ -1,4 +1,4 @@
-var count = 30;
+var count = 60;
 var gameScore = 0;
 var questionIndex = 0;
 
@@ -10,7 +10,7 @@ function loadScores() {
   $("tbody").text("");
   $("h5").text("High Scores");
   gameScore = 0;
-  count = 30;
+  count = 60;
   if (typeof Storage !== "undefined") {
     scores = localStorage.getItem("result");
     if (scores !== null) {
