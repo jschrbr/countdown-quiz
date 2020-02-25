@@ -9,3 +9,19 @@
 // THEN the game is over
 // WHEN the game is over
 // THEN I can save my initials and score
+
+// questions = {question:answer, question:[answer, ringer]}
+
+// start timer (30 secs)
+// load game card
+// var questionKeys = Object.keys(questions)
+// var questionNum = questionKeys.length random
+// var question = questionKeys[questionNum]
+// questions[question].length > 1
+
+// Logging queestions from myQuestions object in questions.js
+var i = 0;
+while (i < myQuestions.length) {
+  console.log(myQuestions[i].question);
+  i++;
+}
