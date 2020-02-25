@@ -13,7 +13,7 @@ function loadScores() {
   count = 30;
   if (typeof Storage !== "undefined") {
     scores = localStorage.getItem("result");
-    if (scores !== "") {
+    if (scores !== null) {
       scores = JSON.parse(scores);
       if (scores.length > 0) {
         scores.sort((a, b) => (a.score < b.score ? 1 : -1));
@@ -42,7 +42,7 @@ function gameOver() {
   }
   var game = { player: init.toUpperCase(), score: gameScore };
   var scores = localStorage.getItem("result");
-  if (scores !== "") {
+  if (scores !== null) {
     scores = JSON.parse(scores);
     scores.push(game);
   } else {
