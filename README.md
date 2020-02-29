@@ -21,7 +21,10 @@
 </div>
 
 ```sh
-Click start to begin a game. Answer as many questions as you can. When prompted enter your initals and click save. Rinse and repeat.
+Click start to begin a game.
+Answer as many questions as you can.
+When prompted enter your initals and click save.
+Rinse and repeat.
 ```
 
 ## Author
