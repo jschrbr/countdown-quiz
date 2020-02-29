@@ -13,6 +13,11 @@
         integrity="sha384-Vkoo8x4CGsO3+Hhxv8T/Q5PaXtkKtu6ug5TOeNV6gBiFeWPGFN9MuhOf23Q9Ifjh"
         crossorigin="anonymous"
     >
+    <link
+        rel="stylesheet"
+        href="./assets/css/style.css"
+        type="text/css"
+    >
     <title>Countdown!</title>
 
 </head>
@@ -37,11 +42,14 @@
                                 <th scope="col">Score</th>
                             </tr>
                         </thead>
-                        <tbody>
+                        <tbody id="score-table">
                             <!-- Initials, Score (from localStorage) -->
                         </tbody>
                     </table>
-                    <ul class="list-group list-group-flush">
+                    <ul
+                        class="list-group list-group-flush ligro"
+                        id="question-list"
+                    >
 
                     </ul>
                     <!-- Table -->
@@ -58,16 +66,26 @@
                     </a>
                     <div
                         class="clearfix"
-                        id="status"
+                        id="status-panel"
                     >
-                        <h4
-                            id="timer"
-                            class="float-left"
-                        >Time: 60</h4>
-                        <h4
-                            id="score"
-                            class="float-right"
-                        >Score: 0</h4>
+                        <div class="float-left">
+                            <span>
+                                <h4 class="custom-control-inline">Time: </h4>
+                                <h4
+                                    class="custom-control-inline"
+                                    id="timer"
+                                ></h4>
+                            </span>
+                        </div>
+                        <div class="float-right">
+                            <span>
+                                <h4 class="custom-control-inline">Score: </h4>
+                                <h4
+                                    class="custom-control-inline"
+                                    id="score"
+                                ></h4>
+                            </span>
+                        </div>
                     </div>
                 </div>
             </div>
@@ -75,58 +93,59 @@
     </main>
 
 
-    <!-- <section> -->
-    <div
-        class="modal fade"
-        id="gameOver"
-        tabindex="-1"
-        role="dialog"
-        aria-labelledby="exampleModalLabel"
-        aria-hidden="true"
-    >
+    <section>
         <div
-            class="modal-dialog"
-            role="document"
+            class="modal fade"
+            id="game-over"
+            tabindex="-1"
+            role="dialog"
+            aria-labelledby="exampleModalLabel"
+            aria-hidden="true"
         >
-            <div class="modal-content">
-                <div class="modal-header">
-                    <h4
-                        class="modal-title"
-                        id="exampleModalLabel"
-                    >Game Over</h4>
-                    <!-- score -->
-                    <button
-                        type="button"
-                        class="close"
-                        data-dismiss="modal"
-                        aria-label="Close"
-                    >
-                        <span aria-hidden="true">&times;</span>
-                    </button>
-                </div>
-                <div class="modal-body">
-                    Enter intials below
-                    <!-- Input initials -->
-                    <input
-                        class="form-control"
-                        type="text"
-                        maxlength="3"
-                        placeholder="AAA"
-                        style="text-transform: uppercase;"
-                    >
-                </div>
-                <div class="modal-footer">
-                    <button
-                        type="button"
-                        class="btn btn-primary"
-                        id="save"
-                    >Save</button>
-                    <!-- save to localStorage -->
+            <div
+                class="modal-dialog"
+                role="document"
+            >
+                <div class="modal-content">
+                    <div class="modal-header">
+                        <h4
+                            class="modal-title"
+                            id="exampleModalLabel"
+                        >Game Over</h4>
+                        <!-- score -->
+                        <button
+                            type="button"
+                            class="close"
+                            data-dismiss="modal"
+                            aria-label="Close"
+                        >
+                            <span aria-hidden="true">&times;</span>
+                        </button>
+                    </div>
+                    <div class="modal-body">
+                        Enter intials below
+                        <!-- Input initials -->
+                        <input
+                            class="form-control"
+                            id="player-initials"
+                            type="text"
+                            maxlength="3"
+                            placeholder="AAA"
+                            style="text-transform: uppercase;"
+                        >
+                    </div>
+                    <div class="modal-footer">
+                        <button
+                            type="button"
+                            class="btn btn-primary"
+                            id="save"
+                        >Save</button>
+                        <!-- save to localStorage -->
+                    </div>
                 </div>
             </div>
         </div>
-    </div>
-    <!-- </section> -->
+    </section>
 
 
     <section>

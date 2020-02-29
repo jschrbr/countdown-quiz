@@ -1,107 +1,137 @@
-var count = 60;
-var gameScore = 0;
-var questionIndex = 0;
+const headingEl = $("h5");
+const questionListEl = $("ul");
+const statusEl = $("#status-panel");
+const tableEl = $("table");
+const highScoreEl = $("#score-table");
+const startBtn = $("#start");
+const saveBtn = $("#save");
+const scoreEl = $("#score");
+const timerEl = $("#timer");
+const initialsInput = $("input");
+const gameOverModal = $("#game-over");
+const localItem = "result";
 
-function loadScores() {
-  $("ul").hide();
-  $("#status").hide();
-  $("table").show();
-  $("#start").show();
-  $("tbody").text("");
-  $("h5").text("High Scores");
-  gameScore = 0;
-  count = 60;
-  if (typeof Storage !== "undefined") {
-    scores = localStorage.getItem("result");
-    if (scores !== null) {
-      scores = JSON.parse(scores);
-      if (scores.length > 0) {
-        scores.sort((a, b) => (a.score < b.score ? 1 : -1));
-        var i = 0;
-        while (i < scores.length) {
-          var row = $("<tr>"),
-            pos = $("<th>").text(i + 1),
-            player = $("<th>").text(scores[i].player),
-            score = $("<th>").text(scores[i].score);
-          row.append(pos, player, score);
-          $("tbody").append(row);
-          i++;
-        }
+const gameTimer = {
+  slider: null,
+  Start: function() {
+    this.slider = setInterval(function() {
+      let count = parseInt(timerEl.text());
+      let score = parseInt(scoreEl.text());
+      if (count <= 0) {
+        clearInterval(this.slider);
+      } else {
+        timerEl.text(--count);
+        scoreEl.text(score);
       }
-    }
-  } else {
-    document.getElementById("result").innerHTML =
-      "Sorry, your browser does not support Web Storage...";
+    }, 1000);
+  },
+  Stop: function() {
+    window.clearTimeout(this.slider);
+    gameOverModal.modal(focus);
   }
+};
+
+const start = gameTimer.Start; // Start the slider
+const stop = gameTimer.Stop; // Stop the slider
+
+function clearBoard() {
+  questionListEl.text("");
+  questionListEl.hide();
+  statusEl.hide();
+  tableEl.hide();
+  startBtn.hide();
+  highScoreEl.text("");
 }
 
 function gameOver() {
-  var init = $("input").val();
+  let score = parseInt(scoreEl.text());
+  let init = initialsInput.val();
   if (init == "") {
     init = "ASS";
   }
-  var game = { player: init.toUpperCase(), score: gameScore };
-  var scores = localStorage.getItem("result");
+  let game = { player: init.toUpperCase(), score: score };
+  let scores = localStorage.getItem(localItem);
   if (scores !== null) {
     scores = JSON.parse(scores);
     scores.push(game);
   } else {
     scores = [game];
   }
-  localStorage.setItem("result", JSON.stringify(scores));
-  $("input").val("");
-  $("#gameOver").modal("hide");
-}
-
-function startTimer() {
-  loadGame();
-  let timer = setInterval(function() {
-    $("#timer").text(`Time: ${--count}`);
-    $("#score").text(`Score: ${gameScore}`);
-    if (count <= 0) {
-      clearInterval(timer);
-      $("#gameOver").modal(focus);
-    }
-  }, 1000);
+  localStorage.setItem(localItem, JSON.stringify(scores));
+  initialsInput.val("");
+  gameOverModal.modal("hide");
 }
 
 function checkAns(ans) {
-  if (ans.target.value === myQuestions[questionIndex].correctAnswer) {
-    gameScore += 10;
-    $("#score").text(`Score: ${gameScore}`);
+  let count = parseInt(timerEl.text());
+  let score = parseInt(scoreEl.text());
+  if (ans.target.value === "correct") {
+    score += 10;
+    scoreEl.text(score);
   } else {
     count -= 2;
     if (count <= 0) {
-      count = 1;
+      count = 0;
+      stop();
     }
+    timerEl.text(count);
   }
   loadGame();
 }
 
 function loadGame() {
-  $("table").hide();
-  $("#start").hide();
-  $("#status").show();
-  $("ul").show();
-  $("ul").text("");
+  clearBoard();
+  statusEl.show();
+  questionListEl.show();
   questionIndex = Math.floor(Math.random() * myQuestions.length);
-  var randQuest = myQuestions[questionIndex].question;
-  var randAns = myQuestions[questionIndex].answers;
-  $("h5").text(randQuest);
-  for (var key in randAns) {
-    var choice = randAns[key];
-    var anc = $("<a>")
+  let randQuest = myQuestions[questionIndex].question;
+  let randAns = myQuestions[questionIndex].answers;
+  let correctAns = myQuestions[questionIndex].correctAnswer;
+  headingEl.text(randQuest);
+  for (let key in randAns) {
+    let choice = randAns[key];
+    let anc = $("<a>")
       .text(choice)
-      .val(key)
-      .attr("class", "btn");
-    var choiceItem = $("<li>").attr("class", "list-group-item");
+      .addClass("btn");
+    if (key === correctAns) {
+      anc.val("correct");
+    }
+    var choiceItem = $("<li>").addClass("list-group-item");
     choiceItem.append(anc);
-    $("ul").append(choiceItem);
+    questionListEl.append(choiceItem);
   }
   $("li").on("click", checkAns);
 }
 
-$("#start").on("click", startTimer);
-$("#save").on("click", gameOver);
-$("#gameOver").on("hidden.bs.modal", loadScores);
+function loadScores() {
+  clearBoard();
+  tableEl.show();
+  startBtn.show();
+  headingEl.text("High Scores");
+  let scores = localStorage.getItem(localItem);
+  if (scores !== null) {
+    scores = JSON.parse(scores);
+    if (scores.length > 0) {
+      scores.sort((a, b) => (a.score < b.score ? 1 : -1));
+      scores.forEach((score, i) => {
+        var row = $("<tr>"),
+          pos = $("<th>").text(i + 1),
+          player = $("<th>").text(score.player),
+          playerScore = $("<th>").text(score.score);
+        row.append(pos, player, playerScore);
+        highScoreEl.append(row);
+      });
+    }
+  }
+}
+
 loadScores();
+
+saveBtn.on("click", gameOver);
+gameOverModal.on("hidden.bs.modal", loadScores);
+startBtn.on("click", function() {
+  loadGame();
+  timerEl.text(30);
+  scoreEl.text(0);
+  start();
+});
