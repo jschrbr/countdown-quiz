@@ -14,6 +14,12 @@
 
 ## Usage
 
+<div align="center">
+<a href="https://jschrbr.github.io/countdown-quiz/">
+<img src="./assets/images/Countdown!.gif"/>
+</a>
+</div>
+
 ```sh
 Click start to begin a game. Answer as many questions as you can. When prompted enter your initals and click save. Rinse and repeat.
 ```
@@ -22,9 +28,9 @@ Click start to begin a game. Answer as many questions as you can. When prompted 
 
 👤 **James Schreiber**
 
-* Website: https://jschrbr.github.io/
-* Github: [@jschrbr](https://github.com/jschrbr)
-* LinkedIn: [@techsmechs](https://linkedin.com/in/techsmechs)
+- Website: https://jschrbr.github.io/
+- Github: [@jschrbr](https://github.com/jschrbr)
+- LinkedIn: [@techsmechs](https://linkedin.com/in/techsmechs)
 
 ## Show your support
 
@@ -34,5 +40,6 @@ Give a ⭐️ if this project helped you!
   <img src="https://c5.patreon.com/external/logo/become_a_patron_button@2x.png" width="160">
 </a>
 
-***
+---
+
 _This README was generated with ❤️ by [readme-md-generator](https://github.com/kefranabg/readme-md-generator)_
